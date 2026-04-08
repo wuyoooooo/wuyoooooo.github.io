@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>...</head>
+<body>
+<div class="container">
+    <div style="margin-top:100px;"><h1>💬 留言板</h1><div class="vine-divider"></div></div>
+    <div class="card" style="padding:20px; margin:20px 0;">
+        <div style="display:flex; gap:12px; flex-wrap:wrap;"><input id="nickname" placeholder="昵称 *" style="flex:1;"><input id="email" placeholder="邮箱 (选填)" style="flex:1;"></div>
+        <textarea id="msgContent" rows="3" placeholder="留下你的留言～" style="margin-top:12px;"></textarea>
+        <button id="submitMsgBtn" class="btn-primary" style="margin-top:12px;">提交留言</button>
+    </div>
+    <div class="grid-12" id="msgContainer"></div>
+</div>
+<script src="js/main.js"></script>
+<script>
+    const STORAGE_KEY = 'spring_messages';
+    function renderMessages() {
+        let msgs = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const container = document.getElementById('msgContainer');
+        if (msgs.length === 0) { container.innerHTML = '<div>暂无留言，来做第一个留言的人吧～</div>'; return; }
+        container.innerHTML = msgs.map(m => `
+            <div class="card" style="grid-column:span 4; padding:16px;"><div><strong>${escapeHtml(m.nickname)}</strong> <span style="color:var(--text-light);">${m.time}</span><span class="delete-msg" data-id="${m.id}" style="float:right; cursor:pointer;">🗑️</span></div><p>${escapeHtml(m.content)}</p></div>
+        `).join('');
+        document.querySelectorAll('.delete-msg').forEach(el => {
+            el.addEventListener('click', () => {
+                if(confirm('删除这条留言？')) {
+                    let id = el.dataset.id;
+                    let newList = JSON.parse(localStorage.getItem(STORAGE_KEY)).filter(i=>i.id != id);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
+                    renderMessages();
+                    showToast('删除成功');
+                }
+            });
+        });
+    }
+    document.getElementById('submitMsgBtn').addEventListener('click', () => {
+        let nickname = document.getElementById('nickname').value.trim();
+        let content = document.getElementById('msgContent').value.trim();
+        if (!nickname || !content) { showToast('昵称和留言内容不能为空'); return; }
+        let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        list.push({ id: Date.now().toString(), nickname, email: document.getElementById('email').value.trim(), content, time: new Date().toLocaleString() });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        renderMessages();
+        showToast('留言成功');
+        document.getElementById('nickname').value = '';
+        document.getElementById('msgContent').value = '';
+        document.getElementById('email').value = '';
+    });
+    renderMessages();
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>... (同上导航栏) ...</head>
+<body>
+<div class="container">
+    <div class="flex-between" style="margin-top:100px;"><h1>📷 生活分享</h1><button id="addShareBtn" class="btn-primary">+ 添加分享</button></div>
+    <div class="grid-12" id="shareContainer" style="margin-top:40px;"></div>
+</div>
+<footer>...</footer>
+<script src="js/main.js"></script>
+<script>
+    const STORAGE_KEY = 'spring_share';
+    function renderShare() {
+        let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const container = document.getElementById('shareContainer');
+        if (list.length === 0) { container.innerHTML = '<div style="grid-column:1/-1;">暂无分享，点击添加～</div>'; return; }
+        container.innerHTML = list.map(s => `
+            <div class="card" style="grid-column:span 4; position:relative;">
+                <img src="${s.img}" style="width:100%; height:180px; object-fit:cover;">
+                <div style="padding:12px;"><h3>${escapeHtml(s.title)}</h3><div>${s.date}</div><p>${escapeHtml(s.content).substring(0,60)}</p></div>
+                <span class="delete-share" data-id="${s.id}" style="position:absolute; top:8px; right:8px; background:white; border-radius:50%; padding:4px; cursor:pointer;">🗑️</span>
+            </div>
+        `).join('');
+        document.querySelectorAll('.delete-share').forEach(el => {
+            el.addEventListener('click', () => {
+                if(confirm('删除分享？')) {
+                    let id = el.dataset.id;
+                    let newList = JSON.parse(localStorage.getItem(STORAGE_KEY)).filter(i=>i.id != id);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
+                    renderShare();
+                    showToast('删除成功');
+                }
+            });
+        });
+    }
+    document.getElementById('addShareBtn').addEventListener('click', () => {
+        let title = prompt('标题'); let date = prompt('日期'); let img = prompt('图片URL'); let content = prompt('内容');
+        if(title && date && img && content) {
+            let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            list.push({ id: Date.now().toString(), title, date, img, content });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+            renderShare();
+            showToast('添加成功');
+        }
+    });
+    renderShare();
+</script>
+</body>
+</html>
