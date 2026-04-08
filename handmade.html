@@ -1,114 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>做手工 | 春日微风</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>做手工 - 春日微风</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="navbar" id="navbar">
-    <div class="logo" onclick="location.href='index.html'">🌿 我的春日主页</div>
-    <div class="nav-links">
-        <a href="index.html" class="nav-link">首页</a>
-        <a href="interest.html" class="nav-link active">我的兴趣</a>
-        <a href="daily.html" class="nav-link">日常经历</a>
-        <a href="share.html" class="nav-link">生活分享</a>
-        <a href="message.html" class="nav-link">留言板</a>
-        <a href="about.html" class="nav-link">关于我</a>
+  <nav class="nav">
+    <div class="nav-logo">我的春日主页</div>
+    <div class="nav-list">
+      <a href="index.html" class="nav-item">首页</a>
+      <a href="interest.html" class="nav-item active">我的兴趣</a>
+      <a href="daily.html" class="nav-item">日常经历</a>
+      <a href="share.html" class="nav-item">生活分享</a>
+      <a href="message.html" class="nav-item">留言板</a>
     </div>
-    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-</div>
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">首页</a><a href="interest.html">我的兴趣</a><a href="daily.html">日常经历</a>
-    <a href="share.html">生活分享</a><a href="message.html">留言板</a><a href="about.html">关于我</a>
-</div>
+    <div class="hamburger">☰</div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html" class="nav-item">首页</a>
+    <a href="interest.html" class="nav-item">我的兴趣</a>
+    <a href="daily.html" class="nav-item">日常经历</a>
+    <a href="share.html" class="nav-item">生活分享</a>
+    <a href="message.html" class="nav-item">留言板</a>
+    <a href="about.html" class="nav-item">关于我</a>
+  </div>
 
-<div class="container">
-    <div class="flex-between" style="margin-top:100px;">
-        <span class="back-btn" onclick="location.href='interest.html'"><i class="fas fa-arrow-left"></i> 返回兴趣总页</span>
-        <button class="btn-primary" id="openAddBtn">+ 添加手工作品</button>
+  <div class="container" style="padding-top: 120px;">
+    <h2 class="title-h2">🧵 做手工</h2>
+    <div class="divider"></div>
+
+    <div class="grid-12">
+      <div class="card" style="grid-column: span 12; padding: 32px;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">手作温暖</h3>
+        <p class="text-main" style="margin-bottom: 12px;">热爱手工制作，喜欢DIY小物件、编织、黏土、饰品，亲手创造独一无二的美好。</p>
+        <p class="text-main">手工的意义在于用心制作，每一个小物件都藏着温暖与心意。</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">手工类型</h3>
+        <p class="text-main">编织、黏土、DIY饰品、纸艺</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">手作心得</h3>
+        <p class="text-main">耐心创作，用心感受，分享快乐</p>
+      </div>
     </div>
-    <h2 style="text-align:center; margin:30px 0 20px;">✂️ 我的手工作品</h2>
-    <div id="itemsContainer" class="grid-12"></div>
-</div>
-<footer>© 2026 春日微风</footer>
+  </div>
 
-<!-- 添加弹窗 -->
-<div id="addModal" class="modal">
-    <div class="modal-content">
-        <h3>✨ 添加手工作品</h3>
-        <div class="form-group"><input id="craftName" placeholder="作品名称 *"></div>
-        <div class="form-group"><input id="craftMaterials" placeholder="制作材料（用逗号分隔） *"></div>
-        <div class="form-group"><input id="craftDate" type="date" placeholder="制作日期"></div>
-        <div class="form-group"><input id="craftImg" placeholder="图片URL *"></div>
-        <div class="form-group"><textarea id="craftThoughts" placeholder="制作心得（不超过100字）"></textarea></div>
-        <div style="display:flex; gap:16px; justify-content:flex-end;">
-            <button id="submitBtn" class="btn-primary">提交</button>
-            <button id="cancelBtn" style="background:#fff; border:1px solid #ccc;">取消</button>
-        </div>
-    </div>
-</div>
-
-<script src="js/main.js"></script>
-<script>
-    const STORAGE_KEY = 'spring_craft';
-    function render() {
-        const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        const container = document.getElementById('itemsContainer');
-        if (!container) return;
-        if (list.length === 0) {
-            container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">暂无手工作品，点击添加～</div>';
-            return;
-        }
-        container.innerHTML = list.map(item => `
-            <div class="card" style="grid-column:span 3; position:relative;">
-                <img src="${item.img}" style="width:100%; height:180px; object-fit:cover;">
-                <div style="padding:12px;">
-                    <h3>${escapeHtml(item.name)}</h3>
-                    <div>📦 ${escapeHtml(item.materials)}</div>
-                    <div>📅 ${item.date}</div>
-                    <p style="margin-top:8px; font-size:14px; color:var(--text-light);">${escapeHtml(item.thoughts).substring(0,60)}</p>
-                </div>
-                <span class="delete-item" data-id="${item.id}" style="position:absolute; top:8px; right:8px; background:white; border-radius:50%; padding:4px; cursor:pointer;">🗑️</span>
-            </div>
-        `).join('');
-        document.querySelectorAll('.delete-item').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (confirm('确定删除这件手工作品吗？')) {
-                    const id = btn.dataset.id;
-                    let newList = JSON.parse(localStorage.getItem(STORAGE_KEY)).filter(i => i.id != id);
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
-                    render();
-                    showToast('删除成功');
-                }
-            });
-        });
-    }
-    document.getElementById('openAddBtn').addEventListener('click', () => openModal('addModal'));
-    document.getElementById('cancelBtn').addEventListener('click', () => closeModal('addModal'));
-    document.getElementById('submitBtn').addEventListener('click', () => {
-        let name = document.getElementById('craftName').value.trim();
-        let materials = document.getElementById('craftMaterials').value.trim();
-        let date = document.getElementById('craftDate').value;
-        let img = document.getElementById('craftImg').value.trim();
-        let thoughts = document.getElementById('craftThoughts').value.trim();
-        if (!name || !materials || !date || !img) { showToast('请完整填写作品名称、材料、日期和图片URL'); return; }
-        let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        list.push({ id: Date.now().toString(), name, materials, date, img, thoughts });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-        closeModal('addModal');
-        render();
-        showToast('添加成功');
-        document.getElementById('craftName').value = '';
-        document.getElementById('craftMaterials').value = '';
-        document.getElementById('craftDate').value = '';
-        document.getElementById('craftImg').value = '';
-        document.getElementById('craftThoughts').value = '';
-    });
-    render();
-</script>
+  <footer class="footer">© 2026 我的春日个人主页 | 所有内容均为个人分享</footer>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,15 +1,56 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>...</head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我 - 春日微风</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
 <body>
-<div class="container">
-    <div style="margin-top:100px; text-align:center;"><h1>🌸 关于我</h1><div class="vine-divider"></div></div>
-    <div class="grid-12" style="margin-top:40px;">
-        <div style="grid-column:span 4; text-align:center;"><div style="width:200px; height:200px; border-radius:50%; background:url('https://picsum.photos/id/169/200/200'); background-size:cover; margin:0 auto; border:3px solid var(--primary);"></div><div style="margin-top:16px;"><span class="tag" style="display:inline-block; background:#eee; border-radius:20px; padding:4px 12px; margin:4px;">热爱生活</span> <span class="tag" style="display:inline-block; background:#eee; border-radius:20px; padding:4px 12px;">喜欢春日</span></div></div>
-        <div class="card" style="grid-column:span 8; padding:24px;"><h3>📌 基本信息</h3><p>姓名：春日微风 | 职业：自由创作者</p><h3>✨ 个人简介</h3><p>喜欢用文字和影像记录生活中的温柔瞬间，相信春天和美好总会不期而遇。</p><h3>📧 联系方式</h3><p>微信：spring_breeze | 邮箱：hi@springpage.com</p></div>
+  <nav class="nav">
+    <div class="nav-logo">我的春日主页</div>
+    <div class="nav-list">
+      <a href="index.html" class="nav-item">首页</a>
+      <a href="interest.html" class="nav-item">我的兴趣</a>
+      <a href="daily.html" class="nav-item">日常经历</a>
+      <a href="share.html" class="nav-item">生活分享</a>
+      <a href="message.html" class="nav-item">留言板</a>
     </div>
-</div>
-<footer>...</footer>
-<script src="js/main.js"></script>
+    <div class="hamburger">☰</div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html" class="nav-item">首页</a>
+    <a href="interest.html" class="nav-item">我的兴趣</a>
+    <a href="daily.html" class="nav-item">日常经历</a>
+    <a href="share.html" class="nav-item">生活分享</a>
+    <a href="message.html" class="nav-item">留言板</a>
+    <a href="about.html" class="nav-item active">关于我</a>
+  </div>
+
+  <div class="container" style="padding-top: 120px;">
+    <h2 class="title-h2">🌸 关于我</h2>
+    <div class="divider"></div>
+
+    <div class="grid-12">
+      <div class="card" style="grid-column: span 12; padding: 32px; text-align: center;">
+        <div style="width: 120px; height: 120px; border-radius: 50%; background: url('https://picsum.photos/200/200') center/cover; margin: 0 auto 24px;"></div>
+        <h3 class="title-h3" style="margin-bottom: 16px;">热爱生活的普通人</h3>
+        <p class="text-main" style="margin-bottom: 12px;">喜欢春日，热爱生活，沉迷一切美好事物，用心感受生活中的小确幸。</p>
+        <p class="text-main">拥有超多兴趣爱好，努力把平凡的日子过得闪闪发光~</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">人生态度</h3>
+        <p class="text-main">积极向上，温柔善良，热爱生活</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">小愿望</h3>
+        <p class="text-main">遍历山河，觉得人间值得</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">© 2026 我的春日个人主页 | 所有内容均为个人分享</footer>
+  <script src="js/main.js"></script>
 </body>
 </html>

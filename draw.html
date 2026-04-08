@@ -1,118 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>画画 | 春日微风</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画画 - 春日微风</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="navbar" id="navbar">
-    <div class="logo" onclick="location.href='index.html'">🌿 我的春日主页</div>
-    <div class="nav-links">
-        <a href="index.html" class="nav-link">首页</a>
-        <a href="interest.html" class="nav-link active">我的兴趣</a>
-        <a href="daily.html" class="nav-link">日常经历</a>
-        <a href="share.html" class="nav-link">生活分享</a>
-        <a href="message.html" class="nav-link">留言板</a>
-        <a href="about.html" class="nav-link">关于我</a>
+  <nav class="nav">
+    <div class="nav-logo">我的春日主页</div>
+    <div class="nav-list">
+      <a href="index.html" class="nav-item">首页</a>
+      <a href="interest.html" class="nav-item active">我的兴趣</a>
+      <a href="daily.html" class="nav-item">日常经历</a>
+      <a href="share.html" class="nav-item">生活分享</a>
+      <a href="message.html" class="nav-item">留言板</a>
     </div>
-    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-</div>
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">首页</a><a href="interest.html">我的兴趣</a><a href="daily.html">日常经历</a>
-    <a href="share.html">生活分享</a><a href="message.html">留言板</a><a href="about.html">关于我</a>
-</div>
+    <div class="hamburger">☰</div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html" class="nav-item">首页</a>
+    <a href="interest.html" class="nav-item">我的兴趣</a>
+    <a href="daily.html" class="nav-item">日常经历</a>
+    <a href="share.html" class="nav-item">生活分享</a>
+    <a href="message.html" class="nav-item">留言板</a>
+    <a href="about.html" class="nav-item">关于我</a>
+  </div>
 
-<div class="container">
-    <div class="flex-between" style="margin-top:100px;">
-        <span class="back-btn" onclick="location.href='interest.html'"><i class="fas fa-arrow-left"></i> 返回兴趣总页</span>
-        <button class="btn-primary" id="openAddBtn">+ 添加画作</button>
+  <div class="container" style="padding-top: 120px;">
+    <h2 class="title-h2">✏️ 画画</h2>
+    <div class="divider"></div>
+
+    <div class="grid-12">
+      <div class="card" style="grid-column: span 12; padding: 32px;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">手绘时光</h3>
+        <p class="text-main" style="margin-bottom: 12px;">喜欢用画笔记录生活中的美好，擅长手绘、简笔画、水彩画，用色彩表达心情。</p>
+        <p class="text-main">画画能让我静下心来，感受创作的快乐，每一幅作品都是独一无二的小美好。</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">绘画类型</h3>
+        <p class="text-main">水彩、简笔、手绘、插画</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">创作日常</h3>
+        <p class="text-main">随手画，记录灵感，分享作品</p>
+      </div>
     </div>
-    <h2 style="text-align:center; margin:30px 0 20px;">🎨 我的画画作品</h2>
-    <div id="itemsContainer" class="grid-12"></div>
-</div>
-<footer>© 2026 春日微风</footer>
+  </div>
 
-<!-- 添加弹窗 -->
-<div id="addModal" class="modal">
-    <div class="modal-content">
-        <h3>✨ 添加画作</h3>
-        <div class="form-group"><input id="pName" placeholder="作品名称 *"></div>
-        <div class="form-group">
-            <select id="pTool">
-                <option value="马克笔">马克笔</option><option value="水彩">水彩</option>
-                <option value="彩铅">彩铅</option><option value="数位板">数位板</option><option value="其他">其他</option>
-            </select>
-        </div>
-        <div class="form-group"><input id="pDate" type="date" placeholder="绘画日期"></div>
-        <div class="form-group"><input id="pImg" placeholder="图片URL *"></div>
-        <div class="form-group"><textarea id="pDesc" placeholder="作品介绍（不超过100字）"></textarea></div>
-        <div style="display:flex; gap:16px; justify-content:flex-end;">
-            <button id="submitBtn" class="btn-primary">提交</button>
-            <button id="cancelBtn" style="background:#fff; border:1px solid #ccc;">取消</button>
-        </div>
-    </div>
-</div>
-
-<script src="js/main.js"></script>
-<script>
-    const STORAGE_KEY = 'spring_painting';
-    function render() {
-        const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        const container = document.getElementById('itemsContainer');
-        if (!container) return;
-        if (list.length === 0) {
-            container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">暂无画作，点击添加～</div>';
-            return;
-        }
-        container.innerHTML = list.map(item => `
-            <div class="card" style="grid-column:span 3; position:relative;">
-                <img src="${item.img}" style="width:100%; height:200px; object-fit:cover;">
-                <div style="padding:12px;">
-                    <h3>${escapeHtml(item.name)}</h3>
-                    <div>🖌️ ${item.tool} · ${item.date}</div>
-                    <p style="margin-top:8px; font-size:14px; color:var(--text-light);">${escapeHtml(item.desc).substring(0,50)}</p>
-                </div>
-                <span class="delete-item" data-id="${item.id}" style="position:absolute; top:8px; right:8px; background:white; border-radius:50%; padding:4px; cursor:pointer;">🗑️</span>
-            </div>
-        `).join('');
-        // 删除事件
-        document.querySelectorAll('.delete-item').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (confirm('确定删除这幅画作吗？')) {
-                    const id = btn.dataset.id;
-                    let newList = JSON.parse(localStorage.getItem(STORAGE_KEY)).filter(i => i.id != id);
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
-                    render();
-                    showToast('删除成功');
-                }
-            });
-        });
-    }
-    document.getElementById('openAddBtn').addEventListener('click', () => openModal('addModal'));
-    document.getElementById('cancelBtn').addEventListener('click', () => closeModal('addModal'));
-    document.getElementById('submitBtn').addEventListener('click', () => {
-        let name = document.getElementById('pName').value.trim();
-        let tool = document.getElementById('pTool').value;
-        let date = document.getElementById('pDate').value;
-        let img = document.getElementById('pImg').value.trim();
-        let desc = document.getElementById('pDesc').value.trim();
-        if (!name || !img || !date) { showToast('请填写作品名称、日期和图片URL'); return; }
-        let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        list.push({ id: Date.now().toString(), name, tool, date, img, desc });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-        closeModal('addModal');
-        render();
-        showToast('添加成功');
-        document.getElementById('pName').value = '';
-        document.getElementById('pDate').value = '';
-        document.getElementById('pImg').value = '';
-        document.getElementById('pDesc').value = '';
-    });
-    render();
-</script>
+  <footer class="footer">© 2026 我的春日个人主页 | 所有内容均为个人分享</footer>
+  <script src="js/main.js"></script>
 </body>
 </html>

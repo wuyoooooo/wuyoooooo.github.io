@@ -1,102 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>看动漫 | 春日微风</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>看动漫 - 春日微风</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="navbar" id="navbar">
-    <div class="logo" onclick="location.href='index.html'">🌿 我的春日主页</div>
-    <div class="nav-links">
-        <a href="index.html" class="nav-link">首页</a>
-        <a href="interest.html" class="nav-link active">我的兴趣</a>
-        <a href="daily.html" class="nav-link">日常经历</a>
-        <a href="share.html" class="nav-link">生活分享</a>
-        <a href="message.html" class="nav-link">留言板</a>
-        <a href="about.html" class="nav-link">关于我</a>
+  <nav class="nav">
+    <div class="nav-logo">我的春日主页</div>
+    <div class="nav-list">
+      <a href="index.html" class="nav-item">首页</a>
+      <a href="interest.html" class="nav-item active">我的兴趣</a>
+      <a href="daily.html" class="nav-item">日常经历</a>
+      <a href="share.html" class="nav-item">生活分享</a>
+      <a href="message.html" class="nav-item">留言板</a>
     </div>
-    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-</div>
-<div class="mobile-menu" id="mobileMenu">...</div>
+    <div class="hamburger">☰</div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html" class="nav-item">首页</a>
+    <a href="interest.html" class="nav-item">我的兴趣</a>
+    <a href="daily.html" class="nav-item">日常经历</a>
+    <a href="share.html" class="nav-item">生活分享</a>
+    <a href="message.html" class="nav-item">留言板</a>
+    <a href="about.html" class="nav-item">关于我</a>
+  </div>
 
-<div class="container">
-    <div class="flex-between" style="margin-top:100px;">
-        <span class="back-btn" onclick="location.href='interest.html'"><i class="fas fa-arrow-left"></i> 返回兴趣总页</span>
-        <button class="btn-primary" id="openAddBtn">+ 添加新番</button>
+  <div class="container" style="padding-top: 120px;">
+    <h2 class="title-h2">📺 看动漫</h2>
+    <div class="divider"></div>
+
+    <div class="grid-12">
+      <div class="card" style="grid-column: span 12; padding: 32px;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">我的动漫热爱</h3>
+        <p class="text-main" style="margin-bottom: 12px;">动漫是我生活中不可或缺的快乐源泉，喜欢治愈系、日常系、冒险系的动漫作品。</p>
+        <p class="text-main">闲暇时光，泡一杯热茶，追一部喜欢的动漫，就是最惬意的时光啦~</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">最爱番剧</h3>
+        <p class="text-main">治愈系、日常番、热血冒险</p>
+      </div>
+      <div class="card" style="grid-column: span 6; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">追番习惯</h3>
+        <p class="text-main">周末沉浸式观看，收藏优质动漫</p>
+      </div>
     </div>
-    <h2 style="text-align:center; margin:30px 0 20px;">📺 看动漫 · 番剧收藏</h2>
-    <div id="itemsContainer" class="grid-12"></div>
-</div>
-<footer>© 2026 春日微风</footer>
+  </div>
 
-<!-- 添加弹窗 -->
-<div id="addModal" class="modal">
-    <div class="modal-content">
-        <h3>✨ 添加新番</h3>
-        <div class="form-group"><input id="animeName" placeholder="番剧名称 *"></div>
-        <div class="form-group"><select id="animeType"><option>治愈</option><option>热血</option><option>校园</option><option>科幻</option></select></div>
-        <div class="form-group"><input id="animeScore" placeholder="评分 1-10 *"></div>
-        <div class="form-group"><input id="animeCover" placeholder="封面图片URL *"></div>
-        <div class="form-group"><textarea id="animeComment" placeholder="简评"></textarea></div>
-        <div style="display:flex; gap:16px; justify-content:flex-end;">
-            <button id="submitBtn" class="btn-primary">提交</button>
-            <button id="cancelBtn" style="background:#fff; border:1px solid #ccc;">取消</button>
-        </div>
-    </div>
-</div>
-
-<script src="js/main.js"></script>
-<script>
-    const STORAGE_KEY = 'spring_anime';
-    function render() {
-        const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        const container = document.getElementById('itemsContainer');
-        if (!container) return;
-        if (list.length === 0) { container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">暂无番剧，点击添加～</div>'; return; }
-        container.innerHTML = list.map(item => `
-            <div class="card" style="grid-column:span 3; position:relative;">
-                <div style="position:relative;"><img src="${item.cover}" style="width:100%; height:180px; object-fit:cover;"><span class="delete-item" data-id="${item.id}" style="position:absolute; top:8px; right:8px; background:white; border-radius:50%; padding:4px; cursor:pointer;">🗑️</span></div>
-                <div style="padding:12px;"><h3>${escapeHtml(item.name)}</h3><div>⭐ ${item.score} · ${item.type}</div><p>${escapeHtml(item.comment).substring(0,40)}</p></div>
-            </div>
-        `).join('');
-        // 删除事件
-        document.querySelectorAll('.delete-item').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (confirm('确定删除这部番剧吗？')) {
-                    const id = btn.dataset.id;
-                    let newList = JSON.parse(localStorage.getItem(STORAGE_KEY)).filter(i => i.id != id);
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
-                    render();
-                    showToast('删除成功');
-                }
-            });
-        });
-    }
-    document.getElementById('openAddBtn').addEventListener('click', () => openModal('addModal'));
-    document.getElementById('cancelBtn').addEventListener('click', () => closeModal('addModal'));
-    document.getElementById('submitBtn').addEventListener('click', () => {
-        let name = document.getElementById('animeName').value.trim();
-        let type = document.getElementById('animeType').value;
-        let score = parseFloat(document.getElementById('animeScore').value);
-        let cover = document.getElementById('animeCover').value.trim();
-        let comment = document.getElementById('animeComment').value.trim();
-        if (!name || !cover || isNaN(score) || score < 1 || score > 10) { showToast('请完整填写番剧名称、有效评分(1-10)和封面链接'); return; }
-        let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        list.push({ id: Date.now().toString(), name, type, score, cover, comment });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-        closeModal('addModal');
-        render();
-        showToast('添加成功');
-        document.getElementById('animeName').value = '';
-        document.getElementById('animeScore').value = '';
-        document.getElementById('animeCover').value = '';
-        document.getElementById('animeComment').value = '';
-    });
-    render();
-</script>
+  <footer class="footer">© 2026 我的春日个人主页 | 所有内容均为个人分享</footer>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,60 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日常经历 | 春日微风</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日常经历 - 春日微风</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="navbar" id="navbar">...</div>
-<div class="mobile-menu" id="mobileMenu">...</div>
+  <nav class="nav">
+    <div class="nav-logo">我的春日主页</div>
+    <div class="nav-list">
+      <a href="index.html" class="nav-item">首页</a>
+      <a href="interest.html" class="nav-item">我的兴趣</a>
+      <div class="nav-item active">日常经历</div>
+      <a href="share.html" class="nav-item">生活分享</a>
+      <a href="message.html" class="nav-item">留言板</a>
+    </div>
+    <div class="hamburger">☰</div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html" class="nav-item">首页</a>
+    <a href="interest.html" class="nav-item">我的兴趣</a>
+    <a href="daily.html" class="nav-item active">日常经历</a>
+    <a href="share.html" class="nav-item">生活分享</a>
+    <a href="message.html" class="nav-item">留言板</a>
+    <a href="about.html" class="nav-item">关于我</a>
+  </div>
 
-<div class="container">
-    <div class="flex-between" style="margin-top:100px;"><h1>📖 日常经历</h1><button id="addDailyBtn" class="btn-primary">+ 添加记录</button></div>
-    <div class="vine-divider"></div>
-    <div class="timeline-vine" id="timelineContainer"></div>
-</div>
-<footer>© 2026 春日微风</footer>
+  <div class="container" style="padding-top: 120px;">
+    <h2 class="title-h2">📅 日常经历</h2>
+    <div class="divider"></div>
 
-<script src="js/main.js"></script>
-<script>
-    const STORAGE_KEY = 'spring_daily';
-    function renderDaily() {
-        let list = JSON.parse(localStorage.getItem(STORAGE_KEY)).sort((a,b)=>new Date(b.date)-new Date(a.date));
-        const container = document.getElementById('timelineContainer');
-        if (list.length === 0) { container.innerHTML = '<div>暂无记录，点击添加～</div>'; return; }
-        container.innerHTML = list.map(item => `
-            <div class="card" style="margin-bottom:24px; padding:16px; position:relative;">
-                <div style="display:flex; justify-content:space-between;"><strong>${item.date}</strong><span class="delete-daily" data-id="${item.id}" style="cursor:pointer;">🗑️</span></div>
-                <h3>${escapeHtml(item.title)}</h3>
-                <p>${escapeHtml(item.content)}</p>
-            </div>
-        `).join('');
-        document.querySelectorAll('.delete-daily').forEach(el => {
-            el.addEventListener('click', () => {
-                if(confirm('删除这条日常记录？')) {
-                    let id = el.dataset.id;
-                    let newList = JSON.parse(localStorage.getItem(STORAGE_KEY)).filter(i=>i.id != id);
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
-                    renderDaily();
-                    showToast('删除成功');
-                }
-            });
-        });
-    }
-    document.getElementById('addDailyBtn').addEventListener('click', () => {
-        let date = prompt('日期 (YYYY-MM-DD)'); let title = prompt('标题'); let content = prompt('内容');
-        if(date && title && content) {
-            let list = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            list.push({ id: Date.now().toString(), date, title, content });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-            renderDaily();
-            showToast('添加成功');
-        }
-    });
-    renderDaily();
-</script>
+    <div class="grid-12">
+      <div class="card" style="grid-column: span 12; padding: 32px;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">我的平凡小日子</h3>
+        <p class="text-main" style="margin-bottom: 12px;">日出而作，日落而息，享受平凡生活中的小美好，认真过好每一天。</p>
+        <p class="text-main">上班、学习、培养兴趣、陪伴家人，简单的日常，就是最幸福的时光。</p>
+      </div>
+      <div class="card" style="grid-column: span 4; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">晨间时光</h3>
+        <p class="text-main">早起运动，吃早餐，元气满满</p>
+      </div>
+      <div class="card" style="grid-column: span 4; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">日间日常</h3>
+        <p class="text-main">认真工作，学习新知识</p>
+      </div>
+      <div class="card" style="grid-column: span 4; padding: 24px; text-align: center;">
+        <h3 class="title-h3" style="margin-bottom: 16px;">晚间放松</h3>
+        <p class="text-main">培养兴趣，享受独处时光</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">© 2026 我的春日个人主页 | 所有内容均为个人分享</footer>
+  <script src="js/main.js"></script>
 </body>
 </html>
